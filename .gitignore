@@ -11,6 +11,9 @@ npm-debug.log*
 eui.modified.mm
 _tmp*/
 
+# 工具工作记忆
+.workbuddy/
+
 # 编辑器 / 系统
 .vscode/
 .DS_Store

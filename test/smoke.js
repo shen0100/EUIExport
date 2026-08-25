@@ -61,8 +61,12 @@ async function main() {
     console.log('PASS  优先级匹配（精确>前缀>包含）');
 
     // 名称回退链：.gmp 里的 projectID -> lua 工程 eggy.json 的 projectName / vscode 工程名
+    // 某些草稿（如编辑器自带示例图）没有对应 lua 工程，索引命中不了属正常；选一个能命中的来验证
     const idx = maps.readProjectIndex();
-    const gmpDraft = drafts.find((d) => maps.readProjectIdFromGmp(d.dir));
+    const gmpDraft = drafts.find((d) => {
+      const pid = maps.readProjectIdFromGmp(d.dir);
+      return pid && idx[pid];
+    });
     if (gmpDraft) {
       const pid = maps.readProjectIdFromGmp(gmpDraft.dir);
       const entry = idx[pid];
@@ -70,7 +74,7 @@ async function main() {
       assert(entry.projectName || entry.vscodeName, '回退名称（eggy.json projectName / vscode 工程名）应有值');
       console.log(`PASS  名称回退链: gmp projectID=${pid} -> ${entry.projectName || entry.vscodeName}`);
     } else {
-      console.log('SKIP  名称回退链（无 .gmp 草稿可测）');
+      console.log('SKIP  名称回退链（无对应 lua 工程索引的草稿可测）');
     }
     return;
   }

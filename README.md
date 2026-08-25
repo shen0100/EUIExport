@@ -137,7 +137,7 @@ eui export -r D:/FeverApps/party_pc 我的地图
 2. **lua 工程 `eggy.json` 的 `projectName`**：从草稿的 `.gmp` 文件读出工程 ID，在编辑器 `Documents/vscode_projs.json` 记录的 lua 工程目录（`lua_root`）中定位对应工程，取该工程 `eggy.json` 的 `projectName`。
 3. **`Documents/vscode_projs.json`**：VS Code 工程名（从 `LuaSource_<名>` 目录名提取）。
 
-**扫描范围**：自动遍历 FS 与 SE 的所有地图工程根目录（`editor_maps` / `help_build_gmps` / `joint_construction_gmps` / `se_maps`），并识别 FS（`eui.mm`）与 SE（`euidata.mm`）两种工程；同一地图存在于多个根目录时按地图 UUID 去重。
+**扫描范围**：自动遍历 FS 与 SE 的所有地图工程根目录（`editor_maps` / `help_build_gmps` / `joint_construction_gmps` / `se_maps`），并识别 FS（`eui.mm`）与 SE（`euidata.mm`）两种工程；同一地图存在于多个根目录时按地图 UUID 去重，**并保留保存时间最新的一份**（避免导出到 `editor_maps` 等目录里的过期副本，导致节点与编辑器实际 UI 对不上）。
 
 ### `export` 输出内容
 
